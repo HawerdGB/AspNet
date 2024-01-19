@@ -38,14 +38,14 @@ namespace AppStore.Controllers
     }
 
     // Acción para mostrar el formulario de creación de una nueva categoría
-    public IActionResult Crear()
+    public IActionResult Add()
     {
         return View();
     }
 
     // Acción para procesar la creación de una nueva categoría
     [HttpPost]
-    public IActionResult Crear(Categoria categoria)
+    public IActionResult Add(Categoria categoria)
     {
         if (ModelState.IsValid)
         {
@@ -63,7 +63,7 @@ namespace AppStore.Controllers
     }
 
     // Acción para mostrar el formulario de edición de una categoría existente
-    public IActionResult Editar(int id)
+    public IActionResult Edit(int id)
     {
         var categoria = _categoriaService.GetById(id);
 
@@ -77,7 +77,7 @@ namespace AppStore.Controllers
 
     // Acción para procesar la edición de una categoría existente
     [HttpPost]
-    public IActionResult Editar(int id, Categoria categoria)
+    public IActionResult Edit(int id, Categoria categoria)
     {
         if (id != categoria.Id)
         {
@@ -100,31 +100,11 @@ namespace AppStore.Controllers
     }
 
     // Acción para procesar la eliminación de una categoría
-    public IActionResult Eliminar(int id)
+    public IActionResult Delete(int id)
     {
-        var categoria = _categoriaService.GetById(id);
-
-        if (categoria == null)
-        {
-            return NotFound();
-        }
-
-        return View(categoria);
+       _categoriaService.Delete(id);
+       return RedirectToAction(nameof(Index));
     }
 
-    [HttpPost, ActionName("Eliminar")]
-    public IActionResult ConfirmarEliminar(int id)
-    {
-        if (_categoriaService.Delete(id))
-        {
-            return RedirectToAction("Index");
-        }
-        else
-        {
-            ModelState.AddModelError("", "Error al eliminar la categoría. Por favor, inténtelo de nuevo.");
-            var categoria = _categoriaService.GetById(id);
-            return View(categoria);
-        }
     }
-}
 }

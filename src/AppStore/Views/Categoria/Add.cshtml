@@ -1,0 +1,23 @@
+@model AppStore.Models.Domain.Categoria
+
+@{}
+
+<form class="w-40" asp-action="Add" method="post">
+
+<h2>Agregar Categoria</h2>
+
+<div class="input-container">
+    <label asp-for="Nombre" class="w-40">Titulo</label>
+    <input type="text" class="input" asp-for="Nombre">
+</div>
+<div class="message-box pd-x-28 error">
+    <span asp-validation-for="Nombre"></span>
+</div>
+
+
+<div class="input-container">
+    <button class="btn btn-default">Guardar</button>
+    <a class="btn btn-sec" href="/Categoria/Index">Ver Todo</a>
+</div>
+
+</form>

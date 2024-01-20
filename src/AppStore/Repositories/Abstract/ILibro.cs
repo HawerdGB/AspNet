@@ -10,9 +10,9 @@ namespace AppStore.Repositories.Abstract
         bool Update(Libro libro);
         Libro GetById(int id);
         bool Delete(int id);
-        LibroListVm List(string term = "", bool paging = false, int currentPage = 0);
+        LibroListVm Listar(string term, bool paging, int currentPage,int pageSize);
         List<int> GetCatecoriaByLibroId (int libroId);
 
 
     }
-}
+} 

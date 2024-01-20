@@ -14,9 +14,10 @@ public class HomeController : Controller
       _libroService = libroService;
     }
 
-    public IActionResult Index(string term= "", int currentPage = 1)
+    public IActionResult Index(string term = "", int pagina = 1)
     {
-        var libros = _libroService.List(term, true,currentPage);
+         Console.WriteLine($"Término de búsqueda: {term}");
+        var libros = _libroService.Listar(term, true,pagina,5);
         return View(libros);
     }
  

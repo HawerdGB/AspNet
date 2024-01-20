@@ -5,7 +5,7 @@
 
     <section class="search-bar">
           <form >
-          <input type="text" placeholder="buscar libro">
+          <input type="text" placeholder="Buscar libro" name="term">
           <button type="submit"><i class="fa fa-search"></i></button>
          </form>
         </section>
@@ -30,12 +30,13 @@
         </section>
 
         <div class="pagination">
-          <a href="#">&laquo;</a>
-          <a href="#">1</a>
-          <a class="active" href="#">2</a>
-          <a href="#">3</a>
-          <a href="#">4</a>
-          <a href="#">5</a>
-          <a href="#">6</a>
-          <a href="#">&raquo;</a>
-        </div>
+         @for (int i = 1; i <= Model.TotalPages; i++)
+    {
+        <a href="@Url.Action("Index", new { pagina = i, term = Model.Term })"
+           class="@(i == Model.CurrentPage ? "active" : "")">
+           @i
+        </a>
+    }
+    </div>
+
+      

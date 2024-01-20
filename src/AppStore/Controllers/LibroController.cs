@@ -114,9 +114,9 @@ namespace AppStore.Controllers
         }
 
 
-          public IActionResult LibroList()
+          public IActionResult LibroList(string term = "", int pagina = 1)
         {
-            var libros = _libroService.List();
+            var libros = _libroService.Listar(term,true,3,pagina);
             return View(libros);
         }
 
@@ -126,5 +126,10 @@ namespace AppStore.Controllers
             return RedirectToAction(nameof(LibroList));
         }
 
-    }
+    //      public IActionResult ListarLibros(string term = "", int pagina = 0)
+    // {
+    //      var libroListVm = _libroService.Listar(term,true,pagina);
+    //      return View(libroListVm);
+    // }
+}
 }

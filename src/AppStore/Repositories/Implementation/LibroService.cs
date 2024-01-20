@@ -84,28 +84,31 @@ namespace AppStore.Repositories.Implementation
 
         }
 
-        public LibroListVm List(string term = "", bool paging = true, int currentPage = 0)
+        public LibroListVm Listar(string term = "", bool paging = true, int currentPage = 1,int pageSize = 5)
         {
             var data = new LibroListVm();
-            var list = ctx.Libros.ToList();
+            var query = ctx.Libros.AsQueryable();
 
-            if(string.IsNullOrEmpty(term))
+            if(!string.IsNullOrEmpty(term))
             {
                 term = term.ToLower();
-                list = list.Where(x => x.Titulo!.ToLower().StartsWith(term)).ToList();
+                query = query.Where(x => x.Titulo!.ToLower().Contains(term));
             }
 
             if(paging)
             {
-                int pageSize = 5;
-                int count = list.Count;
-                int TotalPages = (int)Math.Ceiling(count/(double)pageSize);
-                list = list.Skip((currentPage-1)*pageSize).Take(pageSize).ToList();
+               
+                int count = query.Count();
+                int totalPages = (int)Math.Ceiling(count/(double)pageSize);
+                currentPage = Math.Max(1, Math.Min(currentPage, totalPages));
+
+                query = query.Skip((currentPage-1)*pageSize).Take(pageSize);
                 data.PageSize = pageSize;
                 data.CurrentPage = currentPage;
-                data.TotalPages = TotalPages;
+                data.TotalPages = totalPages;
 
             }
+            var list = query.ToList();
                     foreach (var libro in list)
                     {
                         var categorias = (
